@@ -49,10 +49,15 @@ public class mainUi {
 	private final int labelWidth = 80;
 	private final int labelHeight = 25;
 	
+	private final int paneContainerWidth = 250;
+	private final int paneContainerHeight = 125;
+		
+	private final int iconSize = 50;
+	
 	private final int borderSize = 10;
 	
-	private final int minWindowWidth = 450;
-	private final int minWindowHeight = 600; 
+	private final int minWindowWidth = 500;
+	private final int minWindowHeight = 800; 
 	
 	
 	private JTextField txtBxBSItemName;
@@ -222,8 +227,10 @@ public class mainUi {
 		splitPaneMainHolder = new JSplitPane();
 		splitPaneMainHolder.setEnabled(false);
 		splitPaneMainHolder.setResizeWeight(0.5);
+		
 		splitPaneMainHolder.setRequestFocusEnabled(false);
-		splitPaneMainHolder.setBounds(10, 11, 417, 133);
+		splitPaneMainHolder.setMinimumSize(new Dimension(minWindowWidth, minWindowHeight));
+		splitPaneMainHolder.setBounds(borderSize, borderSize, minWindowWidth-borderSize*4, 133);
 		frmRunescapeGrandexchange.getContentPane().add(splitPaneMainHolder);
 		
 		
@@ -232,8 +239,15 @@ public class mainUi {
 		splitPaneMainHolder.setLeftComponent(pnlBuySection);
 		pnlBuySection.setLayout(null);
 		
+		JPanel pnlSellSection = new JPanel();
+		pnlSellSection.setBorder(new TitledBorder(null, "Sell Section", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		splitPaneMainHolder.setRightComponent(pnlSellSection);
+		pnlSellSection.setLayout(null);
+		
+		/*
 		JLabel lblBSimg = new JLabel("");
-		lblBSimg.setBounds(6, 16, 96, 27);
+		lblBSimg.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		lblBSimg.setBounds(6, 16, labelWidth,labelHeight);
 		pnlBuySection.add(lblBSimg);
 		
 		JLabel lblBSSpace = new JLabel("");
@@ -273,10 +287,7 @@ public class mainUi {
 		pnlBuySection.add(txtBxBSQuantity);
 		txtBxBSQuantity.setColumns(10);
 		
-		JPanel pnlSellSection = new JPanel();
-		pnlSellSection.setBorder(new TitledBorder(null, "Sell Section", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		splitPaneMainHolder.setRightComponent(pnlSellSection);
-		pnlSellSection.setLayout(null);
+
 		
 		JLabel lblSSimg = new JLabel("");
 		lblSSimg.setBounds(6, 16, 142, 27);
@@ -313,7 +324,7 @@ public class mainUi {
 		txtBxSSQuantity.setBounds(148, 97, 142, 27);
 		pnlSellSection.add(txtBxSSQuantity);
 		txtBxSSQuantity.setColumns(10);
-		
+		*/
 		sysConsole = new JTextArea();
 		sysConsole.setBackground(Color.WHITE);
 		sysConsole.setBorder(new TitledBorder(null, "System", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -349,56 +360,12 @@ public class mainUi {
 		
 		pnlResult.add(btnCalculate);
 		
-		Button button = new Button((String) null);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		button.setFont(new Font("Arial Black", Font.PLAIN, 30));
-		button.setForeground(Color.DARK_GRAY);
-		button.setBackground(Color.GREEN);
-		button.setBounds(236, 163, 25, 21);
 
-		//button.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-		frmRunescapeGrandexchange.getContentPane().add(button);
-		
-		JButton btnNewButton = new JButton("making");
-		btnNewButton.setBackground(Color.green);
-		btnNewButton.setBounds(84, 159, 50, 50);
-		btnNewButton.setBorder(new Border() {
 			
-			@Override
-			public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-				// TODO Auto-generated method stub
-				Rectangle rec = c.getBounds();
-				int currWidth = (int)rec.getWidth();
-				int currHeight = (int)rec.getHeight();
-				g.drawRoundRect(0, 0, currWidth-1, currHeight-1, currWidth, currHeight);
-			}
-			
-			@Override
-			public boolean isBorderOpaque() {
-				// TODO Auto-generated method stub
-				return true;
-			}
-			
-			@Override
-			public Insets getBorderInsets(Component c) {
-				// TODO Auto-generated method stub
-				Rectangle rec = c.getBounds();
-				int currWidth = (int)rec.getWidth();
-				int currHeight = (int)rec.getHeight();
-				return new Insets(currHeight,currWidth,currHeight,currWidth);
-			}
-		});
-		
-		
-
-		frmRunescapeGrandexchange.getContentPane().add(btnNewButton);
-		
-		JButton butn = new JButton("bb");
-		butn.setBackground(Color.GRAY);
-		butn.setBounds(0, 159, 50, 50);
+		JButton butn = new JButton("");
+		butn.setBackground(Color.GREEN);
+		butn.setBounds(0, 159, 25, 25);
 		butn.setBorder(new RoundBorder());
-		
-		btnNewButton.setBackground(Color.red);
 
 		
 		frmRunescapeGrandexchange.getContentPane().add(butn);
@@ -408,7 +375,49 @@ public class mainUi {
 		frmRunescapeGrandexchange.getContentPane().add(button_1);
 	}
 	
-	public void componentResized(ComponentEvent e) {
-        System.out.println(e.getComponent().getClass().getName() + " --- Resized ");            
-    }
+	private void generateFieldsToPane(List<JPanel> paneList)
+	{
+		JPanel pane = new JPanel();
+		
+		//inital position
+		int x = 0;
+		int y = 0;
+		
+
+		//label for icon 
+		JLabel icon = new JLabel();
+		icon.setBounds(x, y, iconSize, iconSize);
+		icon.setBorder(new LineBorder(Color.BLACK, 1, true));
+		y += iconSize;
+		
+		//label for item name
+		JLabel lblItemName = new JLabel("Item Name");
+		lblItemName.setBounds(x, y, labelWidth, labelHeight);
+		
+		y += labelHeight;
+		//label for price
+		JLabel lblPrice = new JLabel("Price $");
+		lblPrice.setBounds(x, y, labelWidth, labelHeight);
+		
+		y += labelHeight;
+		//label for quantity
+		JLabel lblQuantity = new JLabel("Quantity");
+		lblQuantity.setBounds(x, y, labelWidth, labelHeight);
+		
+		//text field for item name
+		JTextField txtItemName = new JTextField();
+		txtItemName.setBounds(x, y, textBoxWidth, textBoxHeight);
+		
+		pane.add(icon);
+		pane.add(lblItemName);
+		pane.add(lblPrice);
+		pane.add(lblQuantity);
+		paneList.add(pane);
+	}
+	
+	private void setHorizontalMidPoint(Object obj, Object refObj)
+	{
+		
+	}
+
 }
